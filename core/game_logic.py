@@ -4,13 +4,17 @@ import core.deck
 
 def calculate_hand_value(hand: list[dict]) -> int:
     score_hand = 0
+    fleg = False
     for i in hand:
         if i["ranc"] == 'J' or i["ranc"] == 'Q' or i["ranc"] == 'K':
             score_hand += 10
         elif i["ranc"] == 'A':
             score_hand += 1
+            fleg = True
         else:
             score_hand += int(i['ranc'])
+    if fleg == True and score_hand <= 11:
+        score_hand += 10   
     return score_hand
 
 def deal_two_each(deck: list[dict], player: dict, dealer: dict) -> None:
