@@ -29,11 +29,14 @@ def dealer_play(deck: list[dict], dealer: dict) -> bool:
     if calculate_hand_value(dealer["hand"]) > 21:
         print("disqualification")
         return False
-    print("yes")
     return True
 
 def run_full_game(deck: list[dict], player: dict, dealer: dict) -> None:
     deal_two_each(deck,player,dealer)
+
+    score_player = calculate_hand_value(player["hand"])
+    score_dealer = calculate_hand_value(dealer["hand"])
+
     while(True):
         ask = core.player_io.ask_player_action()
         if ask == 'H':
@@ -42,24 +45,23 @@ def run_full_game(deck: list[dict], player: dict, dealer: dict) -> None:
         
             if score_player > 21:
                 print("pleyer is no win")
-                print("win_deler = ")
+                print("win_deler = ",score_dealer," player = ",score_player)
                 return None
             else:
                 print("score_player_now = ",score_player)
         if ask == 'S':
             is_dealer = dealer_play(deck,dealer)
             if is_dealer == True:
-                score_player = calculate_hand_value(player["hand"])
                 score_dealer = calculate_hand_value(dealer["hand"])
                 if score_dealer > score_player:
                     print("win_deler = ",score_dealer,"pleyer = ",score_player)
-                elif score_dealer > score_player:
+                elif score_dealer < score_player:
                     print("win_pleyer = ",score_player,"dealer = ",score_dealer)
                 else:
                     print("war = ",score_player,score_dealer)
                 return None
             elif is_dealer == False:
-                print("win_pleyer = ",score_player)
+                print("win_pleyer = ",score_player,"dealer = ",score_dealer)
                 return None
             
 
